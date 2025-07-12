@@ -13,21 +13,51 @@ document.querySelector('.guess').value = 13;
 console.log(document.querySelector('.guess').value);
 
 */
-document.querySelector('.number').textContent = 15;
+let highScore = document.querySelector('.highscore').textContent;
+let number = Math.floor(Math.random() * 20) + 1;
+let score = document.querySelector('.score').textContent;
 
+const displayMessage = function(message){
+    document.querySelector('.message').textContent = message;
+}
 document.querySelector('.check').addEventListener('click',function(){
 
     const guess = document.querySelector('.guess').value;
-    let message = document.querySelector('.message').textContent;
     if (!guess){
-        message = 'No number!'
+        displayMessage('No number!');
     }
+    else if (score < 1 ){
+        displayMessage('Game Over!');
+    }
+    else if ( guess == number){
+        displayMessage('Correct Number!');
+        document.querySelector('.number').textContent = number;
+       document.querySelector('body').style.backgroundColor ='green';
 
-    if ( guess === document.querySelector('.number').textContent){
-        message = 'Correct Number!';
-        console.log('Bye');
-    }else{
-        message = 'Wronggg';
-        console.log('Hello');
+       if (score > highScore){
+       document.querySelector('.highscore').textContent = score;
+       highScore = score;
+       console.log(`Update with ${score} and ${highScore}`);
+       }
+
+        
+    }else if(guess > number){
+        displayMessage('Too high!')
+        document.querySelector('.score').textContent = --score;
+    }else if(guess < number){
+       displayMessage('Too low!')
+        document.querySelector('.score').textContent = --score;
     }
 });
+
+const againBtn = function(){
+    number = Math.floor(Math.random() * 20) + 1;
+    document.querySelector('.number').textContent = '?';
+    document.querySelector('body').style.backgroundColor = '#222';
+    document.querySelector('.guess').value ='';
+    document.querySelector('.score').textContent = 20;
+    score = 20;
+    displayMessage('Start guessing...');
+}
+
+document.querySelector('.again').addEventListener('click', againBtn);
