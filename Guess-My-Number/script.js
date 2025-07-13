@@ -16,12 +16,13 @@ console.log(document.querySelector('.guess').value);
 let highScore = document.querySelector('.highscore').textContent;
 let number = Math.floor(Math.random() * 20) + 1;
 let score = document.querySelector('.score').textContent;
+const check = document.querySelector('.check');
 
 const displayMessage = function(message){
     document.querySelector('.message').textContent = message;
 }
-document.querySelector('.check').addEventListener('click',function(){
 
+const checkNumber = function(){
     const guess = document.querySelector('.guess').value;
     if (!guess){
         displayMessage('No number!');
@@ -48,7 +49,9 @@ document.querySelector('.check').addEventListener('click',function(){
        displayMessage('Too low!')
         document.querySelector('.score').textContent = --score;
     }
-});
+}
+
+document.querySelector('.check').addEventListener('click',checkNumber);
 
 const againBtn = function(){
     number = Math.floor(Math.random() * 20) + 1;
@@ -61,3 +64,9 @@ const againBtn = function(){
 }
 
 document.querySelector('.again').addEventListener('click', againBtn);
+
+document.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && document.querySelector('.message').textContent !== 'Game Over!'){
+        checkNumber();
+    }
+});
