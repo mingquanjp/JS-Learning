@@ -4,24 +4,6 @@
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
-const italianFoods = new Set([
-  'pasta',
-  'gnocchi',
-  'tomatoes',
-  'olive oil',
-  'garlic',
-  'basil',
-]);
-
-const mexicanFoods = new Set([
-  'tortillas',
-  'beans',
-  'rice',
-  'tomatoes',
-  'avocado',
-  'garlic',
-]);
-
 const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 const openingHours = {
   [weekdays[3]]: {
@@ -71,27 +53,174 @@ const restaurant = {
   },
 };
 
-const orderSet = new Set(['Pasta', 'Pizza', 'Pizza', 'Pasta', 'Risoto']);
-console.log(orderSet);
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
 
-console.log(new Set('Hao'));
+// 1. Create an array 'events' of the different game events that happened (no duplicates)
+const events = [...new Set(gameEvents.values())];
+console.log(events);
 
-console.log(orderSet.size);
-console.log(orderSet.has('Pizza'));
-orderSet.add('Garlic Bread');
-orderSet.add('Garlic Bread');
-// console.log(orderSet[0]); --> undefined
-for(const order of orderSet) console.log(order);
+// 2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+for (const [key, value] of gameEvents){
+  key >= 64 && value === '🔶 Yellow card' ?  gameEvents.delete(key) : console.log('Hello');
+}
+console.log(gameEvents);
 
-//Make Set from an Array
-const staff =['Quan', 'Hao', 'Khang', 'Quan'];
-const staffUnique = new Set(staff);
-console.log(staffUnique);
 
-//If we want to remove the duplicate ele in an array
-const staffUnique1 = [...new Set(staff)];
-console.log(staffUnique1);
+//3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
 
+console.log(`An event happend, on average, every ${90/gameEvents.size}`);
+
+// 4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this:
+//       [FIRST HALF] 17: ⚽️ GOAL
+for (const [key, value] of gameEvents){
+  // key <= 45 ? console.log(`[FIRST HALF]`) : console.log(`[SECOND HALF]`); console.log(key, value);
+  key <= 45 ? console.log(`[FIRST HALF] ${key} : ${value}`) : console.log(`[SECOND HALF] ${key} : ${value}`);
+}
+
+
+
+
+
+
+
+
+
+
+//Map Array
+// const question = new Map([
+//   ['question', 'What is the best language?'],
+//   [1, 'C'],
+//   [2, 'Java'],
+//   [3, 'JS'],
+//   ['correct', 3],
+//   [true, 'Correct'],
+//   [false, 'Try again!'],
+// ]);
+// console.log(question);
+
+// //Convert oject to map
+// console.log(Object.entries(openingHours));
+// const hoursMap = new Map(Object.entries(openingHours));
+// console.log(hoursMap);
+
+// for (const [key,value] of question){
+//   if ( typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+
+// }
+
+
+
+// const anwser = Number(prompt('Yout answer :'));
+// console.log(anwser);
+// anwser === question.get('correct') ? console.log(question.get(true)) : console.log(question.get(false));
+
+
+//Conver map to array
+// console.log([...question]);
+
+//MAP
+// const rest = new Map();
+// rest.set('name', 'Quan');
+// rest.set(1, 'Freeze, Italy');
+// console.log(rest.set(2, 'Konbanwa, VietNam'));
+
+// rest
+//   .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+//   .set('open', 11)
+//   .set('close', 23)
+//   .set(true, 'We are open')
+//   .set(false, 'We are closed');
+
+
+// console.log(rest.get('name'));
+// console.log(rest.get('open'));
+
+// const time=21;
+// rest.get(time > rest.get('open') && time < rest.get('close'));
+
+
+// console.log(rest.has('categories'));
+// rest.delete(2);
+
+// //FIx
+// const arr =[1,2]
+// rest.set(arr, 'Test');
+// rest.set(document.querySelector('h1'), 'Heading');
+// console.log(rest);
+// console.log(rest.size);
+
+// console.log(rest.get(arr)); //NOT WORK but it's diff from the set
+
+
+// rest.clear();
+// const orderSet = new Set(['Pasta', 'Pizza', 'Pizza', 'Pasta', 'Risoto']);
+// console.log(orderSet);
+
+// console.log(new Set('Hao'));
+
+// console.log(orderSet.size);
+// console.log(orderSet.has('Pizza'));
+// orderSet.add('Garlic Bread');
+// orderSet.add('Garlic Bread');
+// // console.log(orderSet[0]); --> undefined
+// for(const order of orderSet) console.log(order);
+
+// //Make Set from an Array
+// const staff =['Quan', 'Hao', 'Khang', 'Quan'];
+// const staffUnique = new Set(staff);
+// console.log(staffUnique);
+
+// //If we want to remove the duplicate ele in an array
+// const staffUnique1 = [...new Set(staff)];
+// console.log(staffUnique1);
+
+//SET
+// const italianFoods = new Set([
+//   'pasta',
+//   'gnocchi',
+//   'tomatoes',
+//   'olive oil',
+//   'garlic',
+//   'basil',
+// ]);
+
+// const mexicanFoods = new Set([
+//   'tortillas',
+//   'beans',
+//   'rice',
+//   'tomatoes',
+//   'avocado',
+//   'garlic',
+// ]);
+
+// const commonFoods = italianFoods.intersection(mexicanFoods);//Find element in both 2 SET
+// console.log('Intersection :' ,commonFoods);
+
+// console.log([...commonFoods]);
+
+// const italiaMexicanFusion = italianFoods.union(mexicanFoods); //Combine 2 set
+// console.log('Union ;', italiaMexicanFusion);
+
+// const mix = [...new Set([...italianFoods, ...mexicanFoods])]; //Array
+// console.log(mix);
+
+// const uniqueItalianFoods = italianFoods.difference(mexicanFoods);
+// console.log('Differnce italian :', uniqueItalianFoods);
+
+// const uniqueItalianAndMexicanFoods = italianFoods.symmetricDifference(mexicanFoods);
+// console.log(uniqueItalianAndMexicanFoods);
 
 // //Property Names(KEYS)
 // const temp = Object.keys(openingHours); //Only get the key of obj, not Value
