@@ -53,41 +53,240 @@ const restaurant = {
   },
 };
 
-const gameEvents = new Map([
-  [17, '⚽️ GOAL'],
-  [36, '🔁 Substitution'],
-  [47, '⚽️ GOAL'],
-  [61, '🔁 Substitution'],
-  [64, '🔶 Yellow card'],
-  [69, '🔴 Red card'],
-  [70, '🔁 Substitution'],
-  [72, '🔁 Substitution'],
-  [76, '⚽️ GOAL'],
-  [80, '⚽️ GOAL'],
-  [92, '🔶 Yellow card'],
-]);
+// Coding Challenge #4
 
-// 1. Create an array 'events' of the different game events that happened (no duplicates)
-const events = [...new Set(gameEvents.values())];
-console.log(events);
 
-// 2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
-for (const [key, value] of gameEvents){
-  key >= 64 && value === '🔶 Yellow card' ?  gameEvents.delete(key) : console.log('Hello');
+// Write a program that receives a list of variable names written in underscore_case and convert them to camelCase.
+
+// The input will come from a textarea inserted into the DOM (see code below), and conversion will happen when the button is pressed.
+
+// THIS TEST DATA (pasted to textarea)
+// underscore_case
+//  first_name
+// Some_Variable -->some_variable
+//   calculate_AGE
+// delayed_departure
+
+// SHOULD PRODUCE THIS OUTPUT (5 separate console.log outputs)
+// underscoreCase      ✅
+// firstName           ✅✅
+// someVariable        ✅✅✅
+// calculateAge        ✅✅✅✅
+// delayedDeparture    ✅✅✅✅✅
+
+
+// Afterwards, test with your own test data!
+
+/*List of variables name --> no limit -> ...
+Some_Variable -> someVariable
+3 parts 'Some', '_', 'Variable'
+want : 'Some' -> 'some', '_' ->'', Variable ->Variable
+with the first and third, may be change all of string to lowercase, then make the first ele of string become upper
+the second, use replace ?
+*/
+// console.log('helloooo'.slice(4));
+// console.log('hello_SSSS'.toLowerCase());
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+document.querySelector('button').addEventListener('click',function(){
+  const text = document.querySelector('textarea').value;
+  const newText = text.split('\n');
+
+
+//Another way
+let i =0;
+  for (const item of newText){
+    const [first, second] = item.toLowerCase().split('_');
+    // console.log(second);
+    // console.log(second[0].toLowerCase());
+    const str = `${first}${second[0].toUpperCase() + second.slice(1)}`;
+    console.log(`${str.padEnd(20)} ${'✅'.repeat(++i)}`);
+  };
+
+  //  changeCamelCase(newText); Solution 2
+});
+
+
+
+
+const changeCamelCase = function(arr){ //Function of solution 2
+  let i = 0;
+  for (const item of arr){
+   
+    let newItem = item.toLowerCase(); //some_variable 
+    let tempItem = newItem.slice(newItem.indexOf('_')+1)
+    let last = newItem.slice(0, newItem.indexOf('_')) + tempItem[0].toUpperCase() + tempItem.slice(1);
+    console.log(`${last.padEnd(20)} ${'✅'.repeat(++i)} `);
+    // console.log(newItem.indexOf('_'));
+    
+  }
+
 }
-console.log(gameEvents);
+ changeCamelCase(['Some_Variable', 'calculate_AGE','delayed_departure', 'first_name'] );
 
 
-//3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
 
-console.log(`An event happend, on average, every ${90/gameEvents.size}`);
 
-// 4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this:
-//       [FIRST HALF] 17: ⚽️ GOAL
-for (const [key, value] of gameEvents){
-  // key <= 45 ? console.log(`[FIRST HALF]`) : console.log(`[SECOND HALF]`); console.log(key, value);
-  key <= 45 ? console.log(`[FIRST HALF] ${key} : ${value}`) : console.log(`[SECOND HALF] ${key} : ${value}`);
-}
+
+
+
+// const airline ='TAP Air Portugal';
+
+
+// console.log(airline.toLowerCase());
+// console.log(airline.toUpperCase());
+
+
+// //Fix capitalization in name
+// const passenger ='qUaN';
+// const passengerLower = passenger.toLowerCase();
+// const passengerCorrect = passenger[0].toUpperCase() + passengerLower.slice(1);
+// console.log(passengerCorrect);
+
+
+// //Camparing emails
+// const email = 'quan@gmail.com';
+// const loginEmail ='   QUan@Gmail.Com \n';
+
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim(); // .trim() for remove white space and \n, \t, \r
+// console.log(trimmedEmail);
+
+// console.log(loginEmail.toLowerCase().trim());
+
+// //replacing
+// const priceVN = '100.000VND';
+// const priceUS = priceVN.replace('VND','$').replace('.', ',');
+// console.log(priceUS);
+
+// const annoucement = 'All passengers come to Viet Nam in door 25';
+// console.log(annoucement.replace('door', 'gate'));
+
+// //Boolean
+// const plane = 'Airbus A320 neo';
+// console.log(plane.includes('A320'));
+
+// if (plane.startsWith)'Airbus' && plane.endsWith('neo')
+//   console.log('Part of new Airbus');
+
+
+// console.log('a+very+nice+string'.split('+'));
+// console.log('Quan Nguyen'.split(' '));
+
+// const [firstName, lastName] = 'Quan Nguyen'.split(' ');
+// const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
+// console.log(newName);
+
+// const capitalizeName = name => {
+//   const capName = name.split(' ');
+//   const temp = [];
+//   console.log(capName);
+//   for( const item of capName){
+//     let res = item[0].toUpperCase() + item.slice(1);
+//     temp.push(res);
+//   }
+//   console.log(temp);
+//   console.log(temp.join(' '));
+// }
+
+// //Padding
+
+// capitalizeName('quan nguyen minh');
+
+// const message = 'Go to gate 16';
+// console.log(message.padStart(25,'.'));
+
+// const maskCreditCard = function(number){
+//   const str = number +'';
+//   const last = str.slice(-4);
+//   return last.padStart(str.length,'*');
+// }
+
+// console.log(maskCreditCard(12312314123)); 
+
+// console.log(maskCreditCard('123123123131'));
+
+// //Repeat
+// const message2 = 'Bad wearther... All are delayed';
+// console.log(message2.repeat(5));
+
+// const planesInLine = function(n){
+//   console.log(`There are ${n} planes in the line ${'A'.repeat(n)}`);
+// }
+// planesInLine(5);
+
+// console.log(plane[0]);
+
+// console.log(plane[1]);
+
+// console.log(plane[2]);
+// console.log(airline.length);
+// console.log(airline.indexOf('r'));
+// console.log(airline.lastIndexOf('r'));
+
+// console.log(airline.slice(2)); //cut the ele in string
+// console.log(airline.slice(4,7));
+
+// console.log(airline.slice(-2));
+// console.log(airline.slice(1, -2));
+
+
+// const checkMiddleSeat = function(seat){
+// //B and E are middle seats
+// const s = seat.slice(-1);
+// if (s === 'B' || s === 'E'){
+//   console.log(`You got the middle seat`);
+// }else{
+//   console.log('Hello');
+// }
+// }
+
+// checkMiddleSeat('11B');
+// checkMiddleSeat('1C');
+// checkMiddleSeat('12E');
+
+// console.log(new String('quan'));
+// console.log(typeof(new String('quan'))); //Object
+// console.log('quan', typeof('quan')); // Only string
+// console.log(new String('quan').slice(1)); // String, not object
+
+
+// const gameEvents = new Map([
+//   [17, '⚽️ GOAL'],
+//   [36, '🔁 Substitution'],
+//   [47, '⚽️ GOAL'],
+//   [61, '🔁 Substitution'],
+//   [64, '🔶 Yellow card'],
+//   [69, '🔴 Red card'],
+//   [70, '🔁 Substitution'],
+//   [72, '🔁 Substitution'],
+//   [76, '⚽️ GOAL'],
+//   [80, '⚽️ GOAL'],
+//   [92, '🔶 Yellow card'],
+// ]);
+
+// // 1. Create an array 'events' of the different game events that happened (no duplicates)
+// const events = [...new Set(gameEvents.values())];
+// console.log(events);
+
+// // 2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+// for (const [key, value] of gameEvents){
+//   key >= 64 && value === '🔶 Yellow card' ?  gameEvents.delete(key) : console.log('Hello');
+// }
+// console.log(gameEvents);
+
+
+// //3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+
+// console.log(`An event happend, on average, every ${90/gameEvents.size}`);
+
+// // 4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this:
+// //       [FIRST HALF] 17: ⚽️ GOAL
+// for (const [key, value] of gameEvents){
+//   // key <= 45 ? console.log(`[FIRST HALF]`) : console.log(`[SECOND HALF]`); console.log(key, value);
+//   key <= 45 ? console.log(`[FIRST HALF] ${key} : ${value}`) : console.log(`[SECOND HALF] ${key} : ${value}`);
+// }
 
 
 
