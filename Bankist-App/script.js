@@ -30,3 +30,39 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+console.log(document.documentElement);
+console.log(document.body);
+const allSelection = document.querySelectorAll('.section');
+console.log(allSelection);
+
+document.getElementById('section--1');
+const allButtons = document.getElementsByTagName('button'); // Get all the button with tag button, not the classList
+console.log(allButtons);
+
+console.log(document.getElementsByClassName('btn'));
+
+//Creating and inserting elements
+// .
+const header = document.querySelector('.header');
+
+const message = document.createElement('div');
+message.classList.add('test');
+
+message.innerHTML = `We use cookied for improve quantity. 
+<button class ="btn">Got it! </button>`;
+
+// header.prepend(message); //In the first line
+header.append(message); //In the last line, but the first line has be deleted
+// header.append(message.cloneNode(true)); // the message in prepend still appear
+
+// header.before(message);
+
+header.after(message);
+
+//Delete elements
+document
+  .querySelector('.btn')
+  .addEventListener('click', function () {
+    // message.remove();
+    message.parentElement.removeChild(message); //Another way to delete
+  });

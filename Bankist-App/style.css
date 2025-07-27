@@ -672,3 +672,15 @@ h4 {
   font-size: 1.5rem;
   font-weight: 400;
 }
+
+.test {
+  display : flex;
+  color : rgb(16, 14, 14);
+  justify-content:space-evenly;
+  font-size : 18px;
+  max-width: 800px;
+  width : 98%;
+  align-items: center;
+  background-color: #75a180;
+  height: 75px;
+}
