@@ -168,6 +168,17 @@ img {
   color: inherit;
   background-color: var(--color-primary-darker);
   color: #333;
+  border-radius: 3rem;
+  padding : 0.8rem 2.5rem
+}
+
+.nav__link:hover,
+.nav__link:active {
+  color: inherit;
+  background-color: var(--color-primary-darker);
+  color: #333;
+  border-radius: 3rem;
+  padding : 0.8rem 2.5rem
 }
 
 /* HEADER */
@@ -678,8 +689,8 @@ h4 {
   color : rgb(16, 14, 14);
   justify-content:space-evenly;
   font-size : 18px;
-  max-width: 800px;
-  width : 98%;
+ 
+  width : 100%;
   align-items: center;
   background-color: #75a180;
   height: 75px;
