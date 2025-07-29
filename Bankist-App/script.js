@@ -7,6 +7,8 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const nav = document.querySelector('.nav');
+const section1 = document.getElementById('section--1');
 
 const openModal = function (e) {
   e.preventDefault();
@@ -103,7 +105,7 @@ message.style.color = 'white';
 // logo.classList.contains('c');
 
 const buttonScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.getElementById('section--1');
+
 
 buttonScrollTo.addEventListener('click', function (e) {
   e.preventDefault();
@@ -154,34 +156,200 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     const targetID = e.target.getAttribute('href');
     console.log(targetID);
     const targetEl = document.querySelector(targetID);
-    targetEl.scrollIntoView({ behavior : 'smooth' });
+    targetEl.scrollIntoView({ behavior: 'smooth' });
   }
 });
 
+//Solution 1
+// const temp= ['1'];
 
-const temp= [1];
+// document.querySelectorAll('.operations__tab').forEach(function(item) {
+//   item.addEventListener('click',function(e){
+//     e.preventDefault();
+//     const data = item.getAttribute('data-tab');
+//     console.log(data);
+//     temp.push(data);
 
-document.querySelectorAll('.operations__tab').forEach(function(item) {
-  item.addEventListener('click',function(e){
-    e.preventDefault();
-    const data = item.getAttribute('data-tab');
-    console.log(data);
-    temp.push(data);
-    
- const prev = temp[temp.length -2];
-    const tableContent = document.querySelector(`.operations__content--${data}`);
-    if(data && !item.classList.contains('operations__tab--active')){
-      document.querySelector(`.operations__content--${prev}`).remove('operations__content--active');
-      item.classList.add('operations__tab--active');
-      tableContent.classList.add('operations__content--active');
+//  const prev = temp[temp.length -2];
+//     const tableContent = document.querySelector(`.operations__content--${data}`);
+//     if(data && prev !== data){
+//       document.querySelector(`.operations__tab--${prev}`).classList.remove('operations__tab--active');
+//       document.querySelector(`.operations__content--${prev}`).classList.remove('operations__content--active');
+//       item.classList.add('operations__tab--active');
+//       tableContent.classList.add('operations__content--active');
+//       console.log(`Condition done`);
 
-    }else{
-      item.classList?.remove('operations__tab--active');
-    }
-  });
+//     }
+//   });
+// });
+
+//Solution 2
+// document.querySelectorAll('.operations__tab').forEach(function(item){
+//   item.addEventListener('click', function(e){
+//     e.preventDefault();
+//     const data = item.getAttribute('data-tab');
+//     const tabActive = document.querySelector('.operations__tab--active');
+//     const contentActive = document.querySelector('.operations__content--active');
+//     if (tabActive !== this){
+//       tabActive.classList?.remove('operations__tab--active');
+//       contentActive.classList?.remove('operations__content--active');
+
+//       this.classList.add('operations__tab--active');
+//       document.querySelector(`.operations__content--${data}`).classList.add('operations__content--active');
+//     }
+//   });
+// });
+
+//Solution 3
+const tabs = document.querySelectorAll('.operations__tab');
+const tableContainer = document.querySelector('.operations__tab-container');
+const tabContent = document.querySelectorAll('.operations__content');
+
+tableContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+  const data = clicked.getAttribute('data-tab');
+  console.log(clicked);
+  if (!clicked) return;
+
+  tabs.forEach(e => e.classList.remove('operations__tab--active'));
+  tabContent.forEach(e => e.classList.remove('operations__content--active'));
+
+  clicked.classList.add('operations__tab--active');
+  document
+    .querySelector(`.operations__content--${data}`)
+    .classList.add('operations__content--active');
 });
 
-// 
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    console.log(`Link and siblings:`, link, siblings);
+    const logo = link.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== link) {
+        el.style.opacity = this;
+      }
+      logo.style.opacity = this;
+    });
+  }
+};
+
+//Menu fade animation
+
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+
+nav.addEventListener('mouseout', handleHover.bind(1));
+
+//Sticky navigation
+
+// const initialCoords = section1.getBoundingClientRect();
+
+// window.addEventListener('scroll', function(e){
+// console.log(this.window.scrollY);
+// if (this.window.scrollY > initialCoords.top){
+//   nav.classList.add('sticky');
+// }else{
+//   nav.classList.remove('sticky');
+// }
+// });
+
+//Sticky navigation : Intersection Observer API
+// const obsCallback = function(entries, observer){
+//     entries.forEach(entry => {
+//       console.log(entry);
+//     });
+// };
+
+
+// const obsOptions = {
+//   root : null,
+//   threshold : 0.2,
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
+const head = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+
+
+const obsCallBack = function(entries){
+  entries.forEach(entry => {
+    if (!entry.isIntersecting){ //Out of view
+        nav.classList.add('sticky');
+    }else{
+      nav.classList.remove('sticky');
+    }
+  });
+};
+
+const obsOptions = {
+  root : null, //Default
+  threshold : 0,
+  rootMargin : `-${navHeight}px`, //If the view of element target is < 90% -> no intersecting
+};
+
+
+const observer = new IntersectionObserver(obsCallBack, obsOptions);
+observer.observe(head);
+
+
+//Reveal section
+
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function(entries, observer){
+  console.log(entries);
+  entries.forEach(entry => {
+  
+  if(!entry.isIntersecting) return;
+   //if out of view, do nothing, but if in View, remove hidden
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+  });
+
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root : null,
+  threshold : 0.12,
+});
+allSections.forEach(section => {
+  sectionObserver.observe(section);
+});
+
+
+
+
+// const header = document.getElementById('header');
+
+// const observerOptions = {
+//     root: null, // defaults to the viewport
+//     threshold: 0 // triggers as soon as any part of the header is out of view
+// };
+
+// const observerCallback = (entries) => {
+//     entries.forEach(entry => {
+//         if (!entry.isIntersecting) {
+//             // Header is out of view, so make it sticky
+//             header.classList.add('sticky');
+//         } else {
+//             // Header is in view, remove sticky class
+//             header.classList.remove('sticky');
+//         }
+//     });
+// };
+
+// const observer = new IntersectionObserver(observerCallback, observerOptions);
+// observer.observe(header);
+
+
+
+
+
+
 // console.log(tableContent);
 // tableContent.forEach(function(item){
 //   console.log(item);
@@ -196,7 +364,6 @@ document.querySelectorAll('.operations__tab').forEach(function(item) {
 // h1.firstElementChild.style.color = 'orange';
 // h1.lastElementChild.style.color ='red';
 
-
 // //Going upwards : parents
 // console.log(h1.parentNode);
 // console.log(h1.parentElement);
@@ -208,7 +375,6 @@ document.querySelectorAll('.operations__tab').forEach(function(item) {
 // console.log(h1.previousElementSibling);
 // console.log(h1.nextElementSibling);
 
-
 // console.log(h1.previousSibling);
 
 // console.log(h1.parentElement.children);
@@ -218,7 +384,6 @@ document.querySelectorAll('.operations__tab').forEach(function(item) {
 //     el.style.transform = 'scale(0.5)';
 //   }
 // });
-
 
 // const randomInt = (min,max) => Math.floor(Math.random() * (max-min+1) + min);
 // const randomColor = ()=> {
