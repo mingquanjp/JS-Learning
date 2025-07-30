@@ -110,7 +110,7 @@ img {
 }
 
 .lazy-img {
-  filter: blur(0.1rem);
+  filter: blur(3rem);
 }
 
 /* NAVIGATION */
