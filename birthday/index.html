@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HELLO</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class = "header">
+      <h1 class="title">NHẬP PASS ĐI NGƯỜI ĐẸP</h1>
+    </div>
+
+    <div class="container">
+      <div class="content">
+        <div class = "avatar">
+          <!-- Bạn có thể thay thế bằng hình ảnh thật -->
+        <img src="avatar.jpg" alt="Avatar" class="avatar-img" />
+        </div>
+
+        <div class="keypad">
+          <div class="display">
+            <div class="password-dots" id="passwordDots">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <button class="btn btn-number" data-number="1">1</button>
+            <button class="btn btn-number" data-number="2">2</button>
+            <button class="btn btn-number" data-number="3">3</button>
+
+            <button class="btn btn-number" data-number="4">4</button>
+            <button class="btn btn-number" data-number="5">5</button>
+            <button class="btn btn-number" data-number="6">6</button>
+
+            <button class="btn btn-number" data-number="7">7</button>
+            <button class="btn btn-number" data-number="8">8</button>
+            <button class="btn btn-number" data-number="9">9</button>
+
+            <button class="btn btn-action btn-confirm" id="confirmBtn">
+              ✓
+            </button>
+            <button class="btn btn-number" data-number="0">0</button>
+            <button class="btn btn-action btn-clear" id="clearBtn">✕</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-message" id="successMessage">
+        Mật khẩu chính xác! Chào mừng bạn! 🎉
+      </div>
+
+      <div class="error-message" id="errorMessage">
+        Mật khẩu không chính xác. Vui lòng thử lại! ❌
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

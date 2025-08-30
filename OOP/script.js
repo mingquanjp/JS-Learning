@@ -51,3 +51,22 @@ console.log(quan.species, jonas.species);
 
 console.log(quan.hasOwnProperty('firstName'));
 console.log(quan.hasOwnProperty('species'));
+
+console.log(jonas.__proto__);
+//Obj.prototype ( top of chain)
+console.log(jonas.__proto__.__proto__);
+console.log(jonas.__proto__.__proto__.__proto__);
+
+console.log(Person.prototype.constructor);
+const arr = [1, 2, 3, 4, 5, 4, 2];
+console.log(arr.__proto__ === Array.prototype);
+
+console.log(arr.__proto__.__proto__);
+Array.prototype.unique = function(){
+   return [...new Set(this)];
+}
+//obj can access the method in the prototypes
+console.log(arr.unique());
+
+const h1 = document.querySelector('h1');
+console.dir(x => x + 4);
